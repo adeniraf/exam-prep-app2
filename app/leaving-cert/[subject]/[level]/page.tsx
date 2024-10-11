@@ -25,12 +25,12 @@ const SubjectPage = () => {
   const [exam, setExam] = useState<string>("");
   const pathname: string = usePathname();
 
+  const segment = useExtractUrlSegment(pathname, 1);
   useEffect(() => {
-    const segment = useExtractUrlSegment(pathname, 1);
     if (segment) {
       setExam(segment); // Set the extracted segment in state
     }
-  }, [pathname]);
+  }, [segment, pathname]);
 
   useEffect(() => {
     // Make API call to return a list of all topics within subject and level
@@ -38,6 +38,7 @@ const SubjectPage = () => {
       if (exam) {
         try {
           const response = await axios.get(`/api/exam/subject/level`); // this will be dynamic later
+          console.log(response);
         } catch (error) {
           console.log(error);
         }
